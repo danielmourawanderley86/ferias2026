@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- ferias2026 · V.3.6 · 2026-06-02 -->
+<!-- ferias2026 · V.3.7 · 2026-06-02 -->
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🏖️ Férias Fim de Ano 2026 — Vote! · V.3.6</title>
+<title>🏖️ Férias Fim de Ano 2026 — Vote! · V.3.7</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -876,7 +876,7 @@
   <div class="hero-bg"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <div class="hero-badge">🌴 Família · Férias 2026 · v3.6</div>
+    <div class="hero-badge">🌴 Família · Férias 2026 · v3.7</div>
     <h1>Qual casa a<br>gente <em>escolhe?</em></h1>
     <p class="hero-sub">Litoral de Pernambuco · Fim de Ano</p>
     <div class="hero-meta">
@@ -954,6 +954,7 @@
       <button onclick="showPage('page-results')" id="obrigado-placar">🏆 Ver o placar</button>
       <button onclick="showPage('page-main')" id="obrigado-voltar">← Minhas escolhas</button>
     </div>
+    <button onclick="abrirReset()" id="obrigado-reset" style="width:100%;margin-top:10px;padding:11px;background:transparent;border:1.5px solid rgba(224,92,48,0.4);border-radius:12px;color:#c0492a;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;">🔄 Recomeçar votação</button>
     <div class="obrigado-credit" id="obrigado-credit">💙 App criado por <strong>Claud.ia, Maria e Daniel</strong><br>com ❤️ para nossas famílias</div>
   </div>
 </div>
@@ -969,7 +970,8 @@
     <div style="font-size:13px;color:#5b92aa;text-align:center;margin-bottom:22px;" id="modal-sub">Digite a senha para liberar uma nova votação</div>
     <input id="senha-input" type="password" placeholder="Senha secreta..." style="width:100%;padding:13px 16px;border-radius:12px;border:1.5px solid rgba(0,180,216,0.25);font-family:'DM Sans',sans-serif;font-size:15px;outline:none;color:#023e5c;margin-bottom:8px;" />
     <div id="senha-error" style="display:none;font-size:12.5px;color:#f4845f;margin-bottom:10px;text-align:center;">❌ Senha incorreta. Tente novamente.</div>
-    <button onclick="confirmarSenha()" id="modal-confirm" style="width:100%;padding:14px;background:linear-gradient(135deg,#0096c7,#00b4d8);color:white;border:none;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;margin-bottom:10px;">Confirmar</button>
+    <button onclick="resetMeus()" id="btn-reset-meus" style="width:100%;padding:13px;background:linear-gradient(135deg,#0096c7,#00b4d8);color:white;border:none;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:8px;">🔁 Refazer só os MEUS votos</button>
+    <button onclick="resetTodos()" id="btn-reset-todos" style="width:100%;padding:13px;background:linear-gradient(135deg,#e05c30,#f4845f);color:white;border:none;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:10px;">⚠️ Zerar a votação INTEIRA</button>
     <button onclick="fecharModal()" id="modal-cancel" style="width:100%;padding:12px;background:#f0f8fa;color:#5b92aa;border:none;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;">Cancelar</button>
   </div>
 </div>
@@ -1014,7 +1016,7 @@
 
   const STORAGE_KEY = 'ferias2026_votes';
   const MYVOTE_KEY  = 'ferias2026_myvotes';
-  const SENHA = 'Reveillon2026';
+  const SENHA = 'Oxentenaguara2026';
   let currentLang = 'pt';
   let myVotes = [];
   let votes = {};
@@ -1140,7 +1142,7 @@
 
   const uiText = {
     pt:{
-      badge:'🌴 Família · Férias 2026 · v3.6', h1:'Qual casa a<br>gente <em>escolhe?</em>',
+      badge:'🌴 Família · Férias 2026 · v3.7', h1:'Qual casa a<br>gente <em>escolhe?</em>',
       heroSub:'Litoral de Pernambuco · Fim de Ano',
       pills:['👨‍👩‍👧‍👦 13 pessoas','📅 23 dez – jan 2027','🏖️ PE'],
       sectionLabel:'As opções · clique para ver detalhes',
@@ -1173,7 +1175,7 @@
       btnVoltar:'← Voltar',
     },
     es:{
-      badge:'🌴 Familia · Vacaciones 2026 · v3.6', h1:'¿Qué casa<br>vamos a <em>elegir?</em>',
+      badge:'🌴 Familia · Vacaciones 2026 · v3.7', h1:'¿Qué casa<br>vamos a <em>elegir?</em>',
       heroSub:'Costa de Pernambuco · Fin de Año',
       pills:['👨‍👩‍👧‍👦 13 personas','📅 23 dic – ene 2027','🏖️ PE'],
       sectionLabel:'Las opciones · toca para ver detalles',
@@ -1205,7 +1207,7 @@
       btnVoltar:'← Volver',
     },
     ne:{
-      badge:'🌴 Família · Férias 2026 · v3.6', h1:'Qual casona a<br>gente <em>bota o pé?!</em>',
+      badge:'🌴 Família · Férias 2026 · v3.7', h1:'Qual casona a<br>gente <em>bota o pé?!</em>',
       heroSub:'Beira do Mar de Pernambuco · Fim de Ano, oxe!',
       pills:['👨‍👩‍👧‍👦 13 Cabras da Peste','📅 23 dez – jan 2027','🏖️ PE, arretado!'],
       sectionLabel:'As casas · dá uma olhada, Cabra da Peste!',
@@ -1238,7 +1240,7 @@
       btnVoltar:'← Voltar, Cabra da Peste',
     },
     ve:{
-      badge:'🌴 Familia · Vacaciones 2026 · v3.6', h1:'¿Cuál casa<br>vamos a <em>pillar, pana?!</em>',
+      badge:'🌴 Familia · Vacaciones 2026 · v3.7', h1:'¿Cuál casa<br>vamos a <em>pillar, pana?!</em>',
       heroSub:'Orilla del Mar de Pernambuco · Fin de Año',
       pills:['👨‍👩‍👧‍👦 13 panas','📅 23 dic – ene 2027','🏖️ PE chevere'],
       sectionLabel:'Las casas · dale toque pa ver los detalles',
@@ -1391,6 +1393,7 @@
       set('btn-copiar-txt',L.copiar);
       set('obrigado-placar',L.verPlacar);
       set('obrigado-voltar',L.minhas);
+      set('obrigado-reset',(RESET_TXT[currentLang]||RESET_TXT.pt).reiniciar);
       var bc=document.getElementById('btn-copiar'); if(bc) bc.classList.remove('copied');
       showPage('page-obrigado');
     }catch(e){ console.warn('showObrigado',e); }
@@ -1550,22 +1553,45 @@
     _pendingVote = null;
   }
 
-  function changeVote(){ /* multi-voto: escolher/remover e livre, sem senha */ }
+  function changeVote(){ abrirReset(); }
 
-  async function confirmarSenha() {
-    var input=document.getElementById('senha-input').value;
-    if(input===SENHA){
-      for(var k=0;k<myVotes.length;k++){ await uncastVote(myVotes[k]); }
-      myVotes=[]; saveMyVotes();
-      fecharModal(); showPage('page-main'); updateUI(); updateResultsPage();
-    }else{
-      document.getElementById('senha-error').style.display='block';
-      document.getElementById('senha-input').value='';
-      document.getElementById('senha-input').focus();
-    }
+  function senhaErro(){
+    var e=document.getElementById('senha-error'); if(e) e.style.display='block';
+    var i=document.getElementById('senha-input'); if(i){ i.value=''; i.focus(); }
+  }
+  async function resetMeus(){
+    if(document.getElementById('senha-input').value!==SENHA){ senhaErro(); return; }
+    for(var k=0;k<myVotes.length;k++){ await uncastVote(myVotes[k]); }
+    myVotes=[]; saveMyVotes();
+    fecharModal(); showPage('page-main'); updateUI(); updateResultsPage();
+  }
+  async function resetTodos(){
+    if(document.getElementById('senha-input').value!==SENHA){ senhaErro(); return; }
+    if(_firebaseReady){ try{ await _db.ref('votes').remove(); }catch(e){ console.warn('resetTodos',e); } }
+    else { votes={}; lsSet(STORAGE_KEY, JSON.stringify(votes)); }
+    myVotes=[]; saveMyVotes();
+    fecharModal(); showPage('page-main'); updateUI(); updateResultsPage();
   }
 
   function fecharModal(){document.getElementById('modal-senha').style.display='none';}
+  var RESET_TXT = {
+    pt:{title:'Recomeçar votação', sub:'Digite a senha e escolha o que recomeçar:', meus:'🔁 Refazer só os MEUS votos', todos:'⚠️ Zerar a votação INTEIRA', cancelar:'Cancelar', reiniciar:'🔄 Recomeçar votação'},
+    es:{title:'Reiniciar votación', sub:'Ingresa la clave y elige qué reiniciar:', meus:'🔁 Rehacer SOLO mis votos', todos:'⚠️ Borrar TODA la votación', cancelar:'Cancelar', reiniciar:'🔄 Reiniciar votación'},
+    ne:{title:'Recomeçar a votação', sub:'Bota a senha e escolhe o que recomeçar, visse:', meus:'🔁 Refazer só os MEU voto', todos:'⚠️ Zerar a votação TODINHA', cancelar:'Cancelar', reiniciar:'🔄 Recomeçar, oxe'},
+    ve:{title:'Reiniciar votación', sub:'Mete la clave y elige qué reiniciar, chamo:', meus:'🔁 Rehacer SOLO mis votos', todos:'⚠️ Borrar TODA la votación', cancelar:'Cancelar', reiniciar:'🔄 Reiniciar, chamo'}
+  };
+  function abrirReset(){
+    var L=RESET_TXT[currentLang]||RESET_TXT.pt;
+    var t=document.getElementById('modal-title'); if(t) t.textContent=L.title;
+    var s=document.getElementById('modal-sub'); if(s) s.textContent=L.sub;
+    var bm=document.getElementById('btn-reset-meus'); if(bm) bm.textContent=L.meus;
+    var bt=document.getElementById('btn-reset-todos'); if(bt) bt.textContent=L.todos;
+    var bc=document.getElementById('modal-cancel'); if(bc) bc.textContent=L.cancelar;
+    var i=document.getElementById('senha-input'); if(i){ i.value=''; }
+    var e=document.getElementById('senha-error'); if(e) e.style.display='none';
+    var m=document.getElementById('modal-senha'); if(m){ m.style.display='flex'; }
+    if(i) i.focus();
+  }
 
   function chooseLang(lang) {
     currentLang = lang;
@@ -2130,7 +2156,7 @@
     document.body.classList.add('on-login');
     document.documentElement.classList.add('on-login');
     document.getElementById('senha-input').addEventListener('keydown',function(e){
-      if(e.key==='Enter')confirmarSenha();
+      if(e.key==='Enter')resetMeus();
       if(e.key==='Escape')fecharModal();
     });
     buildNamesGrid();

@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<!-- ferias2026 · V.3.9 · 2026-06-02 -->
+<!-- ferias2026 · V.4.0 · 2026-06-02 -->
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🏖️ Férias Fim de Ano 2026 — Vote! · V.3.9</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>🏖️ Férias Fim de Ano 2026 — Vote! · V.4.0</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -893,7 +896,7 @@
   <div class="hero-bg"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <div class="hero-badge">🌴 Família · Férias 2026 · v3.9</div>
+    <div class="hero-badge">🌴 Família · Férias 2026 · v4.0</div>
     <h1>Qual casa a<br>gente <em>escolhe?</em></h1>
     <p class="hero-sub">Litoral de Pernambuco · Fim de Ano</p>
     <div class="hero-meta">
@@ -1161,7 +1164,7 @@
 
   const uiText = {
     pt:{
-      badge:'🌴 Família · Férias 2026 · v3.9', h1:'Qual casa a<br>gente <em>escolhe?</em>',
+      badge:'🌴 Família · Férias 2026 · v4.0', h1:'Qual casa a<br>gente <em>escolhe?</em>',
       heroSub:'Litoral de Pernambuco · Fim de Ano',
       pills:['👨‍👩‍👧‍👦 13 pessoas','📅 23 dez – jan 2027','🏖️ PE'],
       sectionLabel:'As opções · clique para ver detalhes',
@@ -1194,7 +1197,7 @@
       btnVoltar:'← Voltar',
     },
     es:{
-      badge:'🌴 Familia · Vacaciones 2026 · v3.9', h1:'¿Qué casa<br>vamos a <em>elegir?</em>',
+      badge:'🌴 Familia · Vacaciones 2026 · v4.0', h1:'¿Qué casa<br>vamos a <em>elegir?</em>',
       heroSub:'Costa de Pernambuco · Fin de Año',
       pills:['👨‍👩‍👧‍👦 13 personas','📅 23 dic – ene 2027','🏖️ PE'],
       sectionLabel:'Las opciones · toca para ver detalles',
@@ -1226,7 +1229,7 @@
       btnVoltar:'← Volver',
     },
     ne:{
-      badge:'🌴 Família · Férias 2026 · v3.9', h1:'Qual casona a<br>gente <em>bota o pé?!</em>',
+      badge:'🌴 Família · Férias 2026 · v4.0', h1:'Qual casona a<br>gente <em>bota o pé?!</em>',
       heroSub:'Beira do Mar de Pernambuco · Fim de Ano, oxe!',
       pills:['👨‍👩‍👧‍👦 13 Cabras da Peste','📅 23 dez – jan 2027','🏖️ PE, arretado!'],
       sectionLabel:'As casas · dá uma olhada, Cabra da Peste!',
@@ -1259,7 +1262,7 @@
       btnVoltar:'← Voltar, Cabra da Peste',
     },
     ve:{
-      badge:'🌴 Familia · Vacaciones 2026 · v3.9', h1:'¿Cuál casa<br>vamos a <em>pillar, pana?!</em>',
+      badge:'🌴 Familia · Vacaciones 2026 · v4.0', h1:'¿Cuál casa<br>vamos a <em>pillar, pana?!</em>',
       heroSub:'Orilla del Mar de Pernambuco · Fin de Año',
       pills:['👨‍👩‍👧‍👦 13 panas','📅 23 dic – ene 2027','🏖️ PE chevere'],
       sectionLabel:'Las casas · dale toque pa ver los detalles',
@@ -2122,7 +2125,7 @@
     if (answer === correctAnswer) {
       // Correto — entrar!
       loggedUser = currentLoginUser.name;
-      // login apenas em memória — sem persistência
+      try{ lsSet('ferias2026_user', loggedUser); }catch(e){}
       // Pequeno delay para suavizar transição
       btn.style.background = 'linear-gradient(135deg, #2d9e68, #52b788)';
       btn.style.color = 'white';
@@ -2185,8 +2188,11 @@
     // Sempre exigir login — sem bypass por localStorage
     fetchLiveRates(null);
     loadVotes().then(function(){
+      try{ var _su=lsGet('ferias2026_user'); if(_su) loggedUser=_su; }catch(e){}
       updateUI();updateResultsPage();updateWelcome();
-      if(myVotes.length){showPage('page-results');}
+      // Entrada determinística (independente de cache): só duas telas possíveis ao abrir o link
+      if(myVotes.length >= VOTES_PER_PERSON){ showObrigado(); }
+      else { showPage('page-intro'); }
     });
   });
 </script>

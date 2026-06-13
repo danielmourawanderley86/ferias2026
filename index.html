@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- ferias2026 · V.3.8 · 2026-06-02 -->
+<!-- ferias2026 · V.3.9 · 2026-06-02 -->
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🏖️ Férias Fim de Ano 2026 — Vote! · V.3.8</title>
+<title>🏖️ Férias Fim de Ano 2026 — Vote! · V.3.9</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -810,6 +810,8 @@
     .currency-btn{ padding:5px 6px; }
     .back-nav-btn{ padding:6px 9px !important; font-size:11px !important; }
   }
+  .reset-link-btn{display:flex;align-items:center;justify-content:center;gap:6px;margin:0 auto 18px;padding:9px 18px;background:transparent;border:1.5px solid rgba(224,92,48,0.35);border-radius:100px;color:#c0492a;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;width:fit-content;transition:all 0.2s;}
+  .reset-link-btn:hover{background:rgba(224,92,48,0.08);border-color:#e05c30;}
 </style>
 </head>
 <body>
@@ -891,7 +893,7 @@
   <div class="hero-bg"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <div class="hero-badge">🌴 Família · Férias 2026 · v3.8</div>
+    <div class="hero-badge">🌴 Família · Férias 2026 · v3.9</div>
     <h1>Qual casa a<br>gente <em>escolhe?</em></h1>
     <p class="hero-sub">Litoral de Pernambuco · Fim de Ano</p>
     <div class="hero-meta">
@@ -927,6 +929,7 @@
 
 <div class="container">
   <div class="vote-info-note" id="vote-info-note">🗳️ Você tem <span class="vbig">3 votos</span>! <strong>Escolha suas 3 casas favoritas</strong> — você pode mudar enquanto não fechar as 3.</div>
+  <button class="reset-link-btn" onclick="abrirReset()" id="main-reset-btn">🔄 Recomeçar votação</button>
   <div class="section-label" id="cards-section-label">As opções · escolha até 3 favoritas</div>
   <div id="cards-container"></div>
 </div>
@@ -948,6 +951,7 @@
   </div>
   <div class="results-container">
     <button class="back-btn" onclick="goBack()" id="rv-back-btn">← Ver as opções novamente</button>
+    <button class="reset-link-btn" onclick="abrirReset()" id="rv-reset-btn">🔄 Recomeçar votação</button>
     <div class="results-section-label" id="rv-section-label">Placar em tempo real</div>
     <div id="results-container-cards"></div>
     <div class="disclaimer2" id="rv-disclaimer">
@@ -1157,7 +1161,7 @@
 
   const uiText = {
     pt:{
-      badge:'🌴 Família · Férias 2026 · v3.8', h1:'Qual casa a<br>gente <em>escolhe?</em>',
+      badge:'🌴 Família · Férias 2026 · v3.9', h1:'Qual casa a<br>gente <em>escolhe?</em>',
       heroSub:'Litoral de Pernambuco · Fim de Ano',
       pills:['👨‍👩‍👧‍👦 13 pessoas','📅 23 dez – jan 2027','🏖️ PE'],
       sectionLabel:'As opções · clique para ver detalhes',
@@ -1190,7 +1194,7 @@
       btnVoltar:'← Voltar',
     },
     es:{
-      badge:'🌴 Familia · Vacaciones 2026 · v3.8', h1:'¿Qué casa<br>vamos a <em>elegir?</em>',
+      badge:'🌴 Familia · Vacaciones 2026 · v3.9', h1:'¿Qué casa<br>vamos a <em>elegir?</em>',
       heroSub:'Costa de Pernambuco · Fin de Año',
       pills:['👨‍👩‍👧‍👦 13 personas','📅 23 dic – ene 2027','🏖️ PE'],
       sectionLabel:'Las opciones · toca para ver detalles',
@@ -1222,7 +1226,7 @@
       btnVoltar:'← Volver',
     },
     ne:{
-      badge:'🌴 Família · Férias 2026 · v3.8', h1:'Qual casona a<br>gente <em>bota o pé?!</em>',
+      badge:'🌴 Família · Férias 2026 · v3.9', h1:'Qual casona a<br>gente <em>bota o pé?!</em>',
       heroSub:'Beira do Mar de Pernambuco · Fim de Ano, oxe!',
       pills:['👨‍👩‍👧‍👦 13 Cabras da Peste','📅 23 dez – jan 2027','🏖️ PE, arretado!'],
       sectionLabel:'As casas · dá uma olhada, Cabra da Peste!',
@@ -1255,7 +1259,7 @@
       btnVoltar:'← Voltar, Cabra da Peste',
     },
     ve:{
-      badge:'🌴 Familia · Vacaciones 2026 · v3.8', h1:'¿Cuál casa<br>vamos a <em>pillar, pana?!</em>',
+      badge:'🌴 Familia · Vacaciones 2026 · v3.9', h1:'¿Cuál casa<br>vamos a <em>pillar, pana?!</em>',
       heroSub:'Orilla del Mar de Pernambuco · Fin de Año',
       pills:['👨‍👩‍👧‍👦 13 panas','📅 23 dic – ene 2027','🏖️ PE chevere'],
       sectionLabel:'Las casas · dale toque pa ver los detalles',
@@ -1644,6 +1648,9 @@
     var pills=document.querySelectorAll('.hero-pill'); for(var p=0;p<3;p++)if(pills[p])pills[p].textContent=t.pills[p];
     var slbl=document.getElementById('cards-section-label'); if(slbl) slbl.textContent=t.sectionLabel;
     var vin=document.getElementById('vote-info-note'); if(vin) vin.innerHTML = NOTE[currentLang]||NOTE.pt;
+    var _rtxt=(RESET_TXT[currentLang]||RESET_TXT.pt).reiniciar;
+    var _rrb=document.getElementById('rv-reset-btn'); if(_rrb) _rrb.textContent=_rtxt;
+    var _mrb=document.getElementById('main-reset-btn'); if(_mrb) _mrb.textContent=_rtxt;
     var pob=document.getElementById('page-obrigado'); if(pob && pob.classList.contains('active')) showObrigado();
     var ft=document.querySelector('.footer'); if(ft) ft.textContent=t.footer;
     var mt=document.getElementById('modal-title'); if(mt) mt.textContent=t.modalTitle;

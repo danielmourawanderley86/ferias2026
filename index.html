@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- ferias2026 · V.4.0 · 2026-06-02 -->
+<!-- ferias2026 · V.4.1 · 2026-06-02 -->
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -7,7 +7,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>🏖️ Férias Fim de Ano 2026 — Vote! · V.4.0</title>
+<title>🏖️ Férias Fim de Ano 2026 — Vote! · V.4.1</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -896,7 +896,7 @@
   <div class="hero-bg"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <div class="hero-badge">🌴 Família · Férias 2026 · v4.0</div>
+    <div class="hero-badge">🌴 Família · Férias 2026 · v4.1</div>
     <h1>Qual casa a<br>gente <em>escolhe?</em></h1>
     <p class="hero-sub">Litoral de Pernambuco · Fim de Ano</p>
     <div class="hero-meta">
@@ -1053,6 +1053,32 @@
 
   function loadMyVotes(){ try { var a = JSON.parse(lsGet(MYVOTE_KEY)||'[]'); myVotes = Array.isArray(a)?a.map(String):[]; } catch(e){ myVotes = []; } }
   function saveMyVotes(){ lsSet(MYVOTE_KEY, JSON.stringify(myVotes)); }
+  var EPOCH_KEY = 'ferias2026_epoch';
+  function getLocalEpoch(){ return lsGet(EPOCH_KEY) || '0'; }
+  function setLocalEpoch(e){ lsSet(EPOCH_KEY, String(e)); }
+  // Lê o selo de reset uma vez no carregamento; se mudou, este aparelho esquece o voto local.
+  async function checkEpoch(){
+    if(!_firebaseReady) return;
+    try{
+      var snap = await _db.ref('resetEpoch').once('value');
+      var se = snap.val();
+      if(se && String(se) !== getLocalEpoch()){ myVotes=[]; saveMyVotes(); setLocalEpoch(se); }
+    }catch(e){ console.warn('checkEpoch', e); }
+  }
+  // Escuta o selo ao vivo: se o host zerar tudo, todos voltam pra inicial na hora.
+  function attachEpochListener(){
+    if(!_firebaseReady) return;
+    try{
+      _db.ref('resetEpoch').on('value', function(snap){
+        var se = snap.val();
+        if(se && String(se) !== getLocalEpoch()){
+          myVotes=[]; saveMyVotes(); setLocalEpoch(se);
+          updateUI(); updateResultsPage();
+          showPage('page-intro');
+        }
+      }, function(err){ console.warn('epoch listener', err); });
+    }catch(e){ console.warn(e); }
+  }
 
   // Incrementa o voto na nuvem de forma segura contra votos simultâneos (transaction).
   async function castVote(option){
@@ -1164,7 +1190,7 @@
 
   const uiText = {
     pt:{
-      badge:'🌴 Família · Férias 2026 · v4.0', h1:'Qual casa a<br>gente <em>escolhe?</em>',
+      badge:'🌴 Família · Férias 2026 · v4.1', h1:'Qual casa a<br>gente <em>escolhe?</em>',
       heroSub:'Litoral de Pernambuco · Fim de Ano',
       pills:['👨‍👩‍👧‍👦 13 pessoas','📅 23 dez – jan 2027','🏖️ PE'],
       sectionLabel:'As opções · clique para ver detalhes',
@@ -1197,7 +1223,7 @@
       btnVoltar:'← Voltar',
     },
     es:{
-      badge:'🌴 Familia · Vacaciones 2026 · v4.0', h1:'¿Qué casa<br>vamos a <em>elegir?</em>',
+      badge:'🌴 Familia · Vacaciones 2026 · v4.1', h1:'¿Qué casa<br>vamos a <em>elegir?</em>',
       heroSub:'Costa de Pernambuco · Fin de Año',
       pills:['👨‍👩‍👧‍👦 13 personas','📅 23 dic – ene 2027','🏖️ PE'],
       sectionLabel:'Las opciones · toca para ver detalles',
@@ -1229,7 +1255,7 @@
       btnVoltar:'← Volver',
     },
     ne:{
-      badge:'🌴 Família · Férias 2026 · v4.0', h1:'Qual casona a<br>gente <em>bota o pé?!</em>',
+      badge:'🌴 Família · Férias 2026 · v4.1', h1:'Qual casona a<br>gente <em>bota o pé?!</em>',
       heroSub:'Beira do Mar de Pernambuco · Fim de Ano, oxe!',
       pills:['👨‍👩‍👧‍👦 13 Cabras da Peste','📅 23 dez – jan 2027','🏖️ PE, arretado!'],
       sectionLabel:'As casas · dá uma olhada, Cabra da Peste!',
@@ -1262,7 +1288,7 @@
       btnVoltar:'← Voltar, Cabra da Peste',
     },
     ve:{
-      badge:'🌴 Familia · Vacaciones 2026 · v4.0', h1:'¿Cuál casa<br>vamos a <em>pillar, pana?!</em>',
+      badge:'🌴 Familia · Vacaciones 2026 · v4.1', h1:'¿Cuál casa<br>vamos a <em>pillar, pana?!</em>',
       heroSub:'Orilla del Mar de Pernambuco · Fin de Año',
       pills:['👨‍👩‍👧‍👦 13 panas','📅 23 dic – ene 2027','🏖️ PE chevere'],
       sectionLabel:'Las casas · dale toque pa ver los detalles',
@@ -1589,9 +1615,10 @@
   }
   async function resetTodos(){
     if(document.getElementById('senha-input').value!==SENHA){ senhaErro(); return; }
-    if(_firebaseReady){ try{ await _db.ref('votes').remove(); }catch(e){ console.warn('resetTodos',e); } }
+    var _ep = Date.now();
+    if(_firebaseReady){ try{ await _db.ref('votes').remove(); await _db.ref('resetEpoch').set(_ep); }catch(e){ console.warn('resetTodos',e); } }
     else { votes={}; lsSet(STORAGE_KEY, JSON.stringify(votes)); }
-    myVotes=[]; saveMyVotes();
+    myVotes=[]; saveMyVotes(); setLocalEpoch(_ep);
     fecharModal(); showPage('page-main'); updateUI(); updateResultsPage();
   }
 
@@ -2187,8 +2214,10 @@
     buildNamesGrid();
     // Sempre exigir login — sem bypass por localStorage
     fetchLiveRates(null);
-    loadVotes().then(function(){
+    loadVotes().then(async function(){
       try{ var _su=lsGet('ferias2026_user'); if(_su) loggedUser=_su; }catch(e){}
+      await checkEpoch();        // esquece voto local se houve reset global
+      attachEpochListener();     // reset ao vivo pra quem já está com a página aberta
       updateUI();updateResultsPage();updateWelcome();
       // Entrada determinística (independente de cache): só duas telas possíveis ao abrir o link
       if(myVotes.length >= VOTES_PER_PERSON){ showObrigado(); }

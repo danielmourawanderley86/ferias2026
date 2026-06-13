@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- ferias2026 · V.4.1 · 2026-06-02 -->
+<!-- ferias2026 · V.4.2 · 2026-06-02 -->
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -7,7 +7,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>🏖️ Férias Fim de Ano 2026 — Vote! · V.4.1</title>
+<title>🏖️ Férias Fim de Ano 2026 — Vote! · V.4.2</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -815,9 +815,13 @@
   }
   .reset-link-btn{display:flex;align-items:center;justify-content:center;gap:6px;margin:0 auto 18px;padding:9px 18px;background:transparent;border:1.5px solid rgba(224,92,48,0.35);border-radius:100px;color:#c0492a;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;width:fit-content;transition:all 0.2s;}
   .reset-link-btn:hover{background:rgba(224,92,48,0.08);border-color:#e05c30;}
+  .version-badge{position:fixed;top:46px;left:50%;transform:translateX(-50%);z-index:700;background:rgba(2,62,92,0.88);color:#fff;font-size:10px;font-weight:700;letter-spacing:0.05em;padding:3px 11px;border-radius:100px;pointer-events:none;box-shadow:0 2px 8px rgba(0,0,0,0.25);white-space:nowrap;backdrop-filter:blur(4px);}
+  @media (max-width:480px){ .version-badge{top:44px;font-size:9px;padding:3px 9px;} }
 </style>
 </head>
 <body>
+
+<div class="version-badge" id="version-badge">v4.2</div>
 
 <div class="top-bar">
   <button class="currency-btn active" onclick="fetchLiveRates('BRL')" id="btn-BRL"><span class="flag">🇧🇷</span> <span class="cur-label">BRL</span></button>
@@ -896,7 +900,7 @@
   <div class="hero-bg"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <div class="hero-badge">🌴 Família · Férias 2026 · v4.1</div>
+    <div class="hero-badge">🌴 Família · Férias 2026 · v4.2</div>
     <h1>Qual casa a<br>gente <em>escolhe?</em></h1>
     <p class="hero-sub">Litoral de Pernambuco · Fim de Ano</p>
     <div class="hero-meta">
@@ -1190,7 +1194,7 @@
 
   const uiText = {
     pt:{
-      badge:'🌴 Família · Férias 2026 · v4.1', h1:'Qual casa a<br>gente <em>escolhe?</em>',
+      badge:'🌴 Família · Férias 2026 · v4.2', h1:'Qual casa a<br>gente <em>escolhe?</em>',
       heroSub:'Litoral de Pernambuco · Fim de Ano',
       pills:['👨‍👩‍👧‍👦 13 pessoas','📅 23 dez – jan 2027','🏖️ PE'],
       sectionLabel:'As opções · clique para ver detalhes',
@@ -1223,7 +1227,7 @@
       btnVoltar:'← Voltar',
     },
     es:{
-      badge:'🌴 Familia · Vacaciones 2026 · v4.1', h1:'¿Qué casa<br>vamos a <em>elegir?</em>',
+      badge:'🌴 Familia · Vacaciones 2026 · v4.2', h1:'¿Qué casa<br>vamos a <em>elegir?</em>',
       heroSub:'Costa de Pernambuco · Fin de Año',
       pills:['👨‍👩‍👧‍👦 13 personas','📅 23 dic – ene 2027','🏖️ PE'],
       sectionLabel:'Las opciones · toca para ver detalles',
@@ -1255,7 +1259,7 @@
       btnVoltar:'← Volver',
     },
     ne:{
-      badge:'🌴 Família · Férias 2026 · v4.1', h1:'Qual casona a<br>gente <em>bota o pé?!</em>',
+      badge:'🌴 Família · Férias 2026 · v4.2', h1:'Qual casona a<br>gente <em>bota o pé?!</em>',
       heroSub:'Beira do Mar de Pernambuco · Fim de Ano, oxe!',
       pills:['👨‍👩‍👧‍👦 13 Cabras da Peste','📅 23 dez – jan 2027','🏖️ PE, arretado!'],
       sectionLabel:'As casas · dá uma olhada, Cabra da Peste!',
@@ -1288,7 +1292,7 @@
       btnVoltar:'← Voltar, Cabra da Peste',
     },
     ve:{
-      badge:'🌴 Familia · Vacaciones 2026 · v4.1', h1:'¿Cuál casa<br>vamos a <em>pillar, pana?!</em>',
+      badge:'🌴 Familia · Vacaciones 2026 · v4.2', h1:'¿Cuál casa<br>vamos a <em>pillar, pana?!</em>',
       heroSub:'Orilla del Mar de Pernambuco · Fin de Año',
       pills:['👨‍👩‍👧‍👦 13 panas','📅 23 dic – ene 2027','🏖️ PE chevere'],
       sectionLabel:'Las casas · dale toque pa ver los detalles',
@@ -2205,6 +2209,7 @@
 
   document.addEventListener('DOMContentLoaded', function(){
     initFirebase();
+    try{ var _vb=document.getElementById('version-badge'); var _vm=document.title.match(/V\.[\d.]+/); if(_vb&&_vm) _vb.textContent=_vm[0]; }catch(e){}
     document.body.classList.add('on-login');
     document.documentElement.classList.add('on-login');
     document.getElementById('senha-input').addEventListener('keydown',function(e){

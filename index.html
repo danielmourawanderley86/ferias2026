@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- ferias2026 · V.4.4 · 2026-06-02 -->
+<!-- ferias2026 · V.4.6 · 2026-06-02 -->
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -7,7 +7,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>🏖️ Férias Fim de Ano 2026 — Vote! · V.4.4</title>
+<title>🏖️ Férias Fim de Ano 2026 — Vote! · V.4.6</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -818,12 +818,33 @@
   .version-badge{background:rgba(255,255,255,0.96);color:var(--ocean-dark);border:1.5px solid rgba(0,180,216,0.4);font-size:11px;font-weight:800;letter-spacing:0.03em;padding:7px 11px;border-radius:100px;box-shadow:0 2px 10px rgba(0,180,216,0.18);white-space:nowrap;backdrop-filter:blur(8px);line-height:1;}
   @media (max-width:480px){ .version-badge{font-size:10px;padding:6px 8px;} }
   @media (max-width:380px){ #rate-info{ display:none !important; } }
+  .rel-open-btn{border-color:rgba(0,180,216,0.4) !important;color:var(--ocean-dark) !important;}
+  .rel-open-btn:hover{background:rgba(0,180,216,0.08) !important;border-color:var(--ocean) !important;}
+  #modal-relatorio{position:fixed;inset:0;background:rgba(0,60,100,0.6);backdrop-filter:blur(6px);z-index:1001;display:none;align-items:center;justify-content:center;padding:20px;}
+  .rel-box{background:#fff;border-radius:22px;padding:26px 22px;max-width:380px;width:100%;box-shadow:0 24px 64px rgba(0,0,0,0.25);max-height:85vh;overflow-y:auto;}
+  .rel-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:800;color:var(--dark);text-align:center;margin-bottom:16px;}
+  .rel-sub{font-size:14px;color:var(--muted);text-align:center;margin-bottom:10px;}
+  .rel-input{width:100%;padding:13px 16px;border-radius:12px;border:1.5px solid rgba(0,180,216,0.25);font-family:'DM Sans',sans-serif;font-size:15px;outline:none;color:var(--dark);}
+  .rel-btn{width:100%;padding:14px;border-radius:12px;border:none;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;margin-top:12px;}
+  .rel-btn-ver{background:linear-gradient(135deg,#0096c7,#00b4d8);color:#fff;}
+  .rel-btn-fechar{background:#f0f8fa;color:var(--muted);}
+  .rel-resumo{background:rgba(0,180,216,0.08);border-radius:12px;padding:12px;text-align:center;font-size:14px;color:var(--text);margin-bottom:16px;}
+  .rel-sec{margin-bottom:16px;}
+  .rel-sec-t{font-size:13px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:8px;}
+  .rel-ok .rel-sec-t{color:#2d9e68;}
+  .rel-pend .rel-sec-t{color:#c0492a;}
+  .rel-sec ul{list-style:none;padding:0;margin:0;}
+  .rel-sec li{padding:7px 12px;border-radius:9px;font-size:14px;color:var(--text);margin-bottom:5px;}
+  .rel-ok li{background:rgba(45,158,104,0.10);}
+  .rel-pend li{background:rgba(224,92,48,0.08);}
+  .rel-parcial{font-size:12px;color:var(--muted);}
+  .rel-vazio{font-size:13px;color:var(--muted);font-style:italic;}
 </style>
 </head>
 <body>
 
 <div class="top-bar">
-  <div class="version-badge" id="version-badge">v4.4</div>
+  <div class="version-badge" id="version-badge">v4.6</div>
   <button class="currency-btn active" onclick="fetchLiveRates('BRL')" id="btn-BRL"><span class="flag">🇧🇷</span> <span class="cur-label">BRL</span></button>
   <button class="currency-btn" onclick="fetchLiveRates('CLP')" id="btn-CLP"><span class="flag">🇨🇱</span> <span class="cur-label">CLP</span></button>
   <button class="currency-btn" onclick="fetchLiveRates('MXN')" id="btn-MXN"><span class="flag">🇲🇽</span> <span class="cur-label">MXN</span></button>
@@ -900,7 +921,7 @@
   <div class="hero-bg"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <div class="hero-badge">🌴 Família · Férias 2026 · v4.4</div>
+    <div class="hero-badge">🌴 Família · Férias 2026 · v4.6</div>
     <h1>Qual casa a<br>gente <em>escolhe?</em></h1>
     <p class="hero-sub">Litoral de Pernambuco · Fim de Ano</p>
     <div class="hero-meta">
@@ -937,6 +958,7 @@
 <div class="container">
   <div class="vote-info-note" id="vote-info-note">🗳️ Você tem <span class="vbig">3 votos</span>! <strong>Escolha suas 3 casas favoritas</strong> — você pode mudar enquanto não fechar as 3.</div>
   <button class="reset-link-btn" onclick="abrirReset()" id="main-reset-btn">🔄 Recomeçar votação</button>
+  <button class="reset-link-btn rel-open-btn" onclick="abrirRelatorio()">📊 Relatório (organizador)</button>
   <div class="section-label" id="cards-section-label">As opções · escolha até 3 favoritas</div>
   <div id="cards-container"></div>
 </div>
@@ -959,6 +981,7 @@
   <div class="results-container">
     <button class="back-btn" onclick="goBack()" id="rv-back-btn">← Ver as opções novamente</button>
     <button class="reset-link-btn" onclick="abrirReset()" id="rv-reset-btn">🔄 Recomeçar votação</button>
+    <button class="reset-link-btn rel-open-btn" onclick="abrirRelatorio()">📊 Relatório (organizador)</button>
     <div class="results-section-label" id="rv-section-label">Placar em tempo real</div>
     <div id="results-container-cards"></div>
     <div class="disclaimer2" id="rv-disclaimer">
@@ -1057,6 +1080,16 @@
 
   function loadMyVotes(){ try { var a = JSON.parse(lsGet(MYVOTE_KEY)||'[]'); myVotes = Array.isArray(a)?a.map(String):[]; } catch(e){ myVotes = []; } }
   function saveMyVotes(){ lsSet(MYVOTE_KEY, JSON.stringify(myVotes)); }
+  function sanitizeKey(s){ return String(s).replace(/[.#$\[\]\/]/g,'_'); }
+  // Grava na nuvem QUEM votou e em quais casas (ou remove se a pessoa zerou suas escolhas).
+  async function saveUserVotes(){
+    if(!_firebaseReady || !loggedUser) return;
+    try{
+      var ref=_db.ref('userVotes/'+sanitizeKey(loggedUser));
+      if(myVotes.length>0){ await ref.set({ nome: loggedUser, casas: myVotes.slice(), em: Date.now() }); }
+      else { await ref.remove(); }
+    }catch(e){ console.warn('saveUserVotes', e); }
+  }
   var EPOCH_KEY = 'ferias2026_epoch';
   function getLocalEpoch(){ return lsGet(EPOCH_KEY) || '0'; }
   function setLocalEpoch(e){ lsSet(EPOCH_KEY, String(e)); }
@@ -1194,7 +1227,7 @@
 
   const uiText = {
     pt:{
-      badge:'🌴 Família · Férias 2026 · v4.4', h1:'Qual casa a<br>gente <em>escolhe?</em>',
+      badge:'🌴 Família · Férias 2026 · v4.6', h1:'Qual casa a<br>gente <em>escolhe?</em>',
       heroSub:'Litoral de Pernambuco · Fim de Ano',
       pills:['👨‍👩‍👧‍👦 13 pessoas','📅 23 dez – jan 2027','🏖️ PE'],
       sectionLabel:'As opções · clique para ver detalhes',
@@ -1227,7 +1260,7 @@
       btnVoltar:'← Voltar',
     },
     es:{
-      badge:'🌴 Familia · Vacaciones 2026 · v4.4', h1:'¿Qué casa<br>vamos a <em>elegir?</em>',
+      badge:'🌴 Familia · Vacaciones 2026 · v4.6', h1:'¿Qué casa<br>vamos a <em>elegir?</em>',
       heroSub:'Costa de Pernambuco · Fin de Año',
       pills:['👨‍👩‍👧‍👦 13 personas','📅 23 dic – ene 2027','🏖️ PE'],
       sectionLabel:'Las opciones · toca para ver detalles',
@@ -1259,7 +1292,7 @@
       btnVoltar:'← Volver',
     },
     ne:{
-      badge:'🌴 Família · Férias 2026 · v4.4', h1:'Qual casona a<br>gente <em>bota o pé?!</em>',
+      badge:'🌴 Família · Férias 2026 · v4.6', h1:'Qual casona a<br>gente <em>bota o pé?!</em>',
       heroSub:'Beira do Mar de Pernambuco · Fim de Ano, oxe!',
       pills:['👨‍👩‍👧‍👦 13 Cabras da Peste','📅 23 dez – jan 2027','🏖️ PE, arretado!'],
       sectionLabel:'As casas · dá uma olhada, Cabra da Peste!',
@@ -1292,7 +1325,7 @@
       btnVoltar:'← Voltar, Cabra da Peste',
     },
     ve:{
-      badge:'🌴 Familia · Vacaciones 2026 · v4.4', h1:'¿Cuál casa<br>vamos a <em>pillar, pana?!</em>',
+      badge:'🌴 Familia · Vacaciones 2026 · v4.6', h1:'¿Cuál casa<br>vamos a <em>pillar, pana?!</em>',
       heroSub:'Orilla del Mar de Pernambuco · Fin de Año',
       pills:['👨‍👩‍👧‍👦 13 panas','📅 23 dic – ene 2027','🏖️ PE chevere'],
       sectionLabel:'Las casas · dale toque pa ver los detalles',
@@ -1573,10 +1606,10 @@
     var h = houseById(id);
     if (!h || !h.available) return;
     var idx = myVotes.indexOf(id);
-    if (idx !== -1) { myVotes.splice(idx,1); saveMyVotes(); await uncastVote(id); }
+    if (idx !== -1) { myVotes.splice(idx,1); saveMyVotes(); await uncastVote(id); await saveUserVotes(); }
     else {
       if (myVotes.length >= VOTES_PER_PERSON) return;
-      myVotes.push(id); saveMyVotes(); await castVote(id);
+      myVotes.push(id); saveMyVotes(); await castVote(id); await saveUserVotes();
       if (myVotes.length === VOTES_PER_PERSON) { updateUI(); updateResultsPage(); setTimeout(showObrigado, 480); return; }
     }
     updateUI(); updateResultsPage();
@@ -1614,19 +1647,57 @@
   async function resetMeus(){
     if(document.getElementById('senha-input').value!==SENHA){ senhaErro(); return; }
     for(var k=0;k<myVotes.length;k++){ await uncastVote(myVotes[k]); }
-    myVotes=[]; saveMyVotes();
+    myVotes=[]; saveMyVotes(); await saveUserVotes();
     fecharModal(); showPage('page-main'); updateUI(); updateResultsPage();
   }
   async function resetTodos(){
     if(document.getElementById('senha-input').value!==SENHA){ senhaErro(); return; }
     var _ep = Date.now();
-    if(_firebaseReady){ try{ await _db.ref('votes').remove(); await _db.ref('resetEpoch').set(_ep); }catch(e){ console.warn('resetTodos',e); } }
+    if(_firebaseReady){ try{ await _db.ref('votes').remove(); await _db.ref('userVotes').remove(); await _db.ref('resetEpoch').set(_ep); }catch(e){ console.warn('resetTodos',e); } }
     else { votes={}; lsSet(STORAGE_KEY, JSON.stringify(votes)); }
     myVotes=[]; saveMyVotes(); setLocalEpoch(_ep);
     fecharModal(); showPage('page-main'); updateUI(); updateResultsPage();
   }
 
   function fecharModal(){document.getElementById('modal-senha').style.display='none';}
+  function abrirRelatorio(){
+    var m=document.getElementById('modal-relatorio'); if(!m) return;
+    document.getElementById('rel-step-senha').style.display='block';
+    document.getElementById('rel-step-result').style.display='none';
+    document.getElementById('rel-senha-input').value='';
+    document.getElementById('rel-erro').style.display='none';
+    document.getElementById('rel-content').innerHTML='';
+    m.style.display='flex';
+    document.getElementById('rel-senha-input').focus();
+  }
+  function fecharRelatorio(){ var m=document.getElementById('modal-relatorio'); if(m) m.style.display='none'; }
+  async function verRelatorio(){
+    if(document.getElementById('rel-senha-input').value!=='Ferias2026##'){
+      document.getElementById('rel-erro').style.display='block';
+      document.getElementById('rel-senha-input').value='';
+      document.getElementById('rel-senha-input').focus();
+      return;
+    }
+    var uv={};
+    if(_firebaseReady){ try{ uv=(await _db.ref('userVotes').once('value')).val()||{}; }catch(e){ uv={}; } }
+    var concluiram=[], pendentes=[];
+    USERS.forEach(function(u){
+      var rec=uv[sanitizeKey(u.name)];
+      var n=(rec&&rec.casas)?rec.casas.length:0;
+      if(n>=VOTES_PER_PERSON) concluiram.push(u.name);
+      else pendentes.push({nome:u.name,votos:n});
+    });
+    var html='<div class="rel-resumo">✅ <b>'+concluiram.length+'</b> concluíram &nbsp;·&nbsp; ⏳ <b>'+pendentes.length+'</b> pendentes &nbsp;(de '+USERS.length+')</div>';
+    html+='<div class="rel-sec rel-ok"><div class="rel-sec-t">✅ Concluíram (3/3)</div>';
+    html+= concluiram.length? '<ul>'+concluiram.map(function(n){return '<li>'+esc(n)+'</li>';}).join('')+'</ul>' : '<p class="rel-vazio">Ninguém concluiu ainda.</p>';
+    html+='</div>';
+    html+='<div class="rel-sec rel-pend"><div class="rel-sec-t">⏳ Pendentes</div>';
+    html+= pendentes.length? '<ul>'+pendentes.map(function(p){return '<li>'+esc(p.nome)+(p.votos>0?' <span class="rel-parcial">('+p.votos+'/3)</span>':'')+'</li>';}).join('')+'</ul>' : '<p class="rel-vazio">Todos votaram! 🎉</p>';
+    html+='</div>';
+    document.getElementById('rel-content').innerHTML=html;
+    document.getElementById('rel-step-senha').style.display='none';
+    document.getElementById('rel-step-result').style.display='block';
+  }
   var RESET_TXT = {
     pt:{title:'Recomeçar votação', sub:'Digite a senha e escolha o que recomeçar:', meus:'🔁 Refazer só os MEUS votos', todos:'⚠️ Zerar a votação INTEIRA', cancelar:'Cancelar', reiniciar:'🔄 Recomeçar votação'},
     es:{title:'Reiniciar votación', sub:'Ingresa la clave y elige qué reiniciar:', meus:'🔁 Rehacer SOLO mis votos', todos:'⚠️ Borrar TODA la votación', cancelar:'Cancelar', reiniciar:'🔄 Reiniciar votación'},
@@ -2216,6 +2287,8 @@
       if(e.key==='Enter')resetMeus();
       if(e.key==='Escape')fecharModal();
     });
+    var _ri=document.getElementById('rel-senha-input');
+    if(_ri) _ri.addEventListener('keydown',function(e){ if(e.key==='Enter')verRelatorio(); if(e.key==='Escape')fecharRelatorio(); });
     buildNamesGrid();
     // Sempre exigir login — sem bypass por localStorage
     fetchLiveRates(null);
@@ -2223,6 +2296,7 @@
       try{ var _su=lsGet('ferias2026_user'); if(_su) loggedUser=_su; }catch(e){}
       await checkEpoch();        // esquece voto local se houve reset global
       attachEpochListener();     // reset ao vivo pra quem já está com a página aberta
+      if(loggedUser && myVotes.length>0){ saveUserVotes(); }  // assina o voto de quem reabriu (backfill)
       updateUI();updateResultsPage();updateWelcome();
       // Entrada determinística (independente de cache): só duas telas possíveis ao abrir o link
       if(myVotes.length >= VOTES_PER_PERSON){ showObrigado(); }
@@ -2241,6 +2315,20 @@
       <button class="btn-sim" id="btn-sim-vote" onclick="confirmarVoto()">✔ SIM</button>
       <button class="btn-nao" onclick="cancelarVoto()">✘ NÃO</button>
     </div>
+  </div>
+</div>
+
+<div id="modal-relatorio">
+  <div class="rel-box">
+    <div class="rel-title">📊 Relatório de votação</div>
+    <div id="rel-step-senha">
+      <div class="rel-sub">Senha do organizador:</div>
+      <input id="rel-senha-input" type="password" placeholder="Senha..." class="rel-input" autocomplete="off" />
+      <div id="rel-erro" style="display:none;color:#e05c30;font-size:13px;margin-top:8px;text-align:center;">❌ Senha incorreta.</div>
+      <button class="rel-btn rel-btn-ver" onclick="verRelatorio()">Ver relatório</button>
+    </div>
+    <div id="rel-step-result" style="display:none;"><div id="rel-content"></div></div>
+    <button class="rel-btn rel-btn-fechar" onclick="fecharRelatorio()">Fechar</button>
   </div>
 </div>
 
